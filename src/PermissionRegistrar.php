@@ -91,7 +91,7 @@ class PermissionRegistrar
      *
      * @return bool
      */
-    public function registerPermissions(): bool
+    public function registerPermissions()
     {
         $this->gate->before(function (Authorizable $user, string $ability) {
             try {
@@ -120,7 +120,7 @@ class PermissionRegistrar
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getPermissions(array $params = []): Collection
+    public function getPermissions(array $params = [])
     {
         $permissions = $this->cache->remember($this->getKey($params), self::$cacheExpirationTime,
             function () use ($params) {
@@ -148,7 +148,7 @@ class PermissionRegistrar
      *
      * @return string
      */
-    public function getKey(array $params): string
+    public function getKey(array $params)
     {
         if ($params && self::$cacheIsTaggable) {
             return self::$cacheKey.'.'.implode('.', array_values($params));
@@ -162,7 +162,7 @@ class PermissionRegistrar
      *
      * @return \Daniilborovkov\Permission\Contracts\Permission
      */
-    public function getPermissionClass(): Permission
+    public function getPermissionClass()
     {
         return app($this->permissionClass);
     }
@@ -172,7 +172,7 @@ class PermissionRegistrar
      *
      * @return \Daniilborovkov\Permission\Contracts\Role
      */
-    public function getRoleClass(): Role
+    public function getRoleClass()
     {
         return app($this->roleClass);
     }
@@ -182,7 +182,7 @@ class PermissionRegistrar
      *
      * @return \Illuminate\Contracts\Cache\Store
      */
-    public function getCacheStore(): \Illuminate\Contracts\Cache\Store
+    public function getCacheStore()
     {
         return $this->cache->getStore();
     }

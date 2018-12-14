@@ -37,7 +37,7 @@ trait HasRoles
     /**
      * A model may have multiple roles.
      */
-    public function roles(): MorphToMany
+    public function roles()
     {
         return $this->morphToMany(
             config('permission.models.role'),

@@ -38,7 +38,7 @@ trait HasPermissions
     /**
      * A model may have multiple direct permissions.
      */
-    public function permissions(): MorphToMany
+    public function permissions()
     {
         return $this->morphToMany(
             config('permission.models.permission'),
@@ -57,7 +57,7 @@ trait HasPermissions
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePermission(Builder $query, $permissions): Builder
+    public function scopePermission(Builder $query, $permissions)
     {
         $permissions = $this->convertToPermissionModels($permissions);
 
@@ -90,7 +90,7 @@ trait HasPermissions
      *
      * @return array
      */
-    protected function convertToPermissionModels($permissions): array
+    protected function convertToPermissionModels($permissions)
     {
         if ($permissions instanceof Collection) {
             $permissions = $permissions->all();
@@ -116,7 +116,7 @@ trait HasPermissions
      * @return bool
      * @throws \Exception
      */
-    public function hasPermissionTo($permission, $guardName = null): bool
+    public function hasPermissionTo($permission, $guardName = null)
     {
         if (! is_string($permission) && ! is_int($permission) && ! $permission instanceof Permission) {
             throw new PermissionDoesNotExist;
@@ -146,7 +146,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    public function hasUncachedPermissionTo($permission, $guardName = null): bool
+    public function hasUncachedPermissionTo($permission, $guardName = null)
     {
         $permissionClass = $this->getPermissionClass();
 
