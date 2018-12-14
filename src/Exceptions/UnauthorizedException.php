@@ -10,7 +10,7 @@ class UnauthorizedException extends HttpException
 
     private $requiredPermissions = [];
 
-    public static function forRoles(array $roles): self
+    public static function forRoles(array $roles)
     {
         $message = 'User does not have the right roles.';
 
@@ -25,7 +25,7 @@ class UnauthorizedException extends HttpException
         return $exception;
     }
 
-    public static function forPermissions(array $permissions): self
+    public static function forPermissions(array $permissions)
     {
         $message = 'User does not have the right permissions.';
 
@@ -40,7 +40,7 @@ class UnauthorizedException extends HttpException
         return $exception;
     }
 
-    public static function forRolesOrPermissions(array $rolesOrPermissions): self
+    public static function forRolesOrPermissions(array $rolesOrPermissions)
     {
         $message = 'User does not have any of the necessary access rights.';
 
@@ -55,17 +55,17 @@ class UnauthorizedException extends HttpException
         return $exception;
     }
 
-    public static function notLoggedIn(): self
+    public static function notLoggedIn()
     {
         return new static(403, 'User is not logged in.', null, []);
     }
 
-    public function getRequiredRoles(): array
+    public function getRequiredRoles()
     {
         return $this->requiredRoles;
     }
 
-    public function getRequiredPermissions(): array
+    public function getRequiredPermissions()
     {
         return $this->requiredPermissions;
     }

@@ -11,7 +11,7 @@ interface Role
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions(): BelongsToMany;
+    public function permissions();
 
     /**
      * Find a role by its name and guard name.
@@ -23,7 +23,7 @@ interface Role
      *
      * @throws \Daniilborovkov\Permission\Exceptions\RoleDoesNotExist
      */
-    public static function findByName(string $name, $guardName): self;
+    public static function findByName(string $name, $guardName);
 
     /**
      * Find a role by its id and guard name.
@@ -35,7 +35,7 @@ interface Role
      *
      * @throws \Daniilborovkov\Permission\Exceptions\RoleDoesNotExist
      */
-    public static function findById(int $id, $guardName): self;
+    public static function findById(int $id, $guardName);
 
     /**
      * Find or create a role by its name and guard name.
@@ -45,7 +45,7 @@ interface Role
      *
      * @return \Daniilborovkov\Permission\Contracts\Role
      */
-    public static function findOrCreate(string $name, $guardName): self;
+    public static function findOrCreate(string $name, $guardName);
 
     /**
      * Determine if the user may perform the given permission.
@@ -54,5 +54,5 @@ interface Role
      *
      * @return bool
      */
-    public function hasPermissionTo($permission): bool;
+    public function hasPermissionTo($permission);
 }
