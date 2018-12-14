@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\Permission;
+namespace Daniilborovkov\Permission;
 
 use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Spatie\Permission\Contracts\Role as RoleContract;
-use Spatie\Permission\Contracts\Permission as PermissionContract;
+use Daniilborovkov\Permission\Contracts\Role as RoleContract;
+use Daniilborovkov\Permission\Contracts\Permission as PermissionContract;
 
 class PermissionServiceProvider extends ServiceProvider
 {
@@ -153,7 +153,7 @@ class PermissionServiceProvider extends ServiceProvider
      * @param Filesystem $filesystem
      * @return string
      */
-    protected function getMigrationFileName(Filesystem $filesystem): string
+    protected function getMigrationFileName(Filesystem $filesystem)
     {
         $timestamp = date('Y_m_d_His');
 

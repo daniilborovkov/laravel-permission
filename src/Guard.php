@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Permission;
+namespace Daniilborovkov\Permission;
 
 use Illuminate\Support\Collection;
 
@@ -12,7 +12,7 @@ class Guard
      * @param $model
      * @return Collection
      */
-    public static function getNames($model) : Collection
+    public static function getNames($model)
     {
         if (is_object($model)) {
             $guardName = $model->guard_name ?? null;
@@ -42,7 +42,7 @@ class Guard
             ->keys();
     }
 
-    public static function getDefaultName($class): string
+    public static function getDefaultName($class)
     {
         $default = config('auth.defaults.guard');
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\Permission\Traits;
+namespace Daniilborovkov\Permission\Traits;
 
-use Spatie\Permission\PermissionRegistrar;
+use Daniilborovkov\Permission\PermissionRegistrar;
 
 trait RefreshesPermissionCache
 {

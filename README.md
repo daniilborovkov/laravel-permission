@@ -1,20 +1,22 @@
 # Associate users with permissions and roles
 
+Fork to make compatible with php5.6 for legacy project
+
 
 ### Sponsor
 
 <table>
    <tr>
-      <td><img src="http://spatie.github.io/laravel-permission/sponsor-logo.png"></td>
+      <td><img src="http://Daniilborovkov.github.io/laravel-permission/sponsor-logo.png"></td>
       <td>If you want to quickly add authentication and authorization to Laravel projects, feel free to check Auth0's Laravel SDK and free plan at <a href="https://auth0.com/overview?utm_source=GHsponsor&utm_medium=GHsponsor&utm_campaign=laravel-permission&utm_content=auth">https://auth0.com/overview</a>.</td>
    </tr>
 </table>
 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-permission)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-permission)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/Daniilborovkov/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/Daniilborovkov/laravel-permission)
+[![Build Status](https://img.shields.io/travis/Daniilborovkov/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/Daniilborovkov/laravel-permission)
 [![StyleCI](https://styleci.io/repos/42480275/shield)](https://styleci.io/repos/42480275)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-permission)
+[![Total Downloads](https://img.shields.io/packagist/dt/Daniilborovkov/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/Daniilborovkov/laravel-permission)
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -53,8 +55,8 @@ Because all permissions will be registered on [Laravel's gate](https://laravel.c
 $user->can('edit articles');
 ```
 
-Spatie is a web design agency in Antwerp, Belgium. You'll find an overview of all
-our open source projects [on our website](https://spatie.be/opensource).
+Daniilborovkov is a web design agency in Antwerp, Belgium. You'll find an overview of all
+our open source projects [on our website](https://Daniilborovkov.be/opensource).
 
 ## Installation
 
@@ -63,12 +65,12 @@ our open source projects [on our website](https://spatie.be/opensource).
 
 ### Laravel
 
-This package can be used in Laravel 5.4 or higher. If you are using an older version of Laravel, take a look at [the v1 branch of this package](https://github.com/spatie/laravel-permission/tree/v1).
+This package can be used in Laravel 5.4 or higher. If you are using an older version of Laravel, take a look at [the v1 branch of this package](https://github.com/Daniilborovkov/laravel-permission/tree/v1).
 
 You can install the package via composer:
 
 ``` bash
-composer require spatie/laravel-permission
+composer require Daniilborovkov/laravel-permission
 ```
 
 In Laravel 5.5 the service provider will automatically get registered. In older versions of the framework just add the service provider in `config/app.php` file:
@@ -76,14 +78,14 @@ In Laravel 5.5 the service provider will automatically get registered. In older 
 ```php
 'providers' => [
     // ...
-    Spatie\Permission\PermissionServiceProvider::class,
+    Daniilborovkov\Permission\PermissionServiceProvider::class,
 ];
 ```
 
-You can publish [the migration](https://github.com/spatie/laravel-permission/blob/master/database/migrations/create_permission_tables.php.stub) with:
+You can publish [the migration](https://github.com/Daniilborovkov/laravel-permission/blob/master/database/migrations/create_permission_tables.php.stub) with:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Daniilborovkov\Permission\PermissionServiceProvider" --tag="migrations"
 ```
 
 If you're using UUIDs or GUIDs for your `User` models you can update the `create_permission_tables.php` migration and replace `$table->unsignedBigInteger($columnNames['model_morph_key'])` with `$table->uuid($columnNames['model_morph_key'])`.
@@ -98,10 +100,10 @@ php artisan migrate
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Daniilborovkov\Permission\PermissionServiceProvider" --tag="config"
 ```
 
-When published, [the `config/permission.php` config file](https://github.com/spatie/laravel-permission/blob/master/config/permission.php) contains:
+When published, [the `config/permission.php` config file](https://github.com/Daniilborovkov/laravel-permission/blob/master/config/permission.php) contains:
 
 ```php
 return [
@@ -114,10 +116,10 @@ return [
          * is often just the "Permission" model but you may use whatever you like.
          *
          * The model you want to use as a Permission model needs to implement the
-         * `Spatie\Permission\Contracts\Permission` contract.
+         * `Daniilborovkov\Permission\Contracts\Permission` contract.
          */
 
-        'permission' => Spatie\Permission\Models\Permission::class,
+        'permission' => Daniilborovkov\Permission\Models\Permission::class,
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -125,10 +127,10 @@ return [
          * is often just the "Role" model but you may use whatever you like.
          *
          * The model you want to use as a Role model needs to implement the
-         * `Spatie\Permission\Contracts\Role` contract.
+         * `Daniilborovkov\Permission\Contracts\Role` contract.
          */
 
-        'role' => Spatie\Permission\Models\Role::class,
+        'role' => Daniilborovkov\Permission\Models\Role::class,
 
     ],
 
@@ -208,7 +210,7 @@ return [
          * The key to use when tagging and prefixing entries in the cache.
          */
 
-        'key' => 'spatie.permission.cache',
+        'key' => 'Daniilborovkov.permission.cache',
 
         /*
          * When checking for a permission against a model by passing a Permission
@@ -236,15 +238,15 @@ return [
 You can install the package via Composer:
 
 ``` bash
-composer require spatie/laravel-permission
+composer require Daniilborovkov/laravel-permission
 ```
 
 Copy the required files:
 
 ```bash
 mkdir -p config
-cp vendor/spatie/laravel-permission/config/permission.php config/permission.php
-cp vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php.stub database/migrations/2018_01_01_000000_create_permission_tables.php
+cp vendor/Daniilborovkov/laravel-permission/config/permission.php config/permission.php
+cp vendor/Daniilborovkov/laravel-permission/database/migrations/create_permission_tables.php.stub database/migrations/2018_01_01_000000_create_permission_tables.php
 ```
 
 You will also need to create another configuration file at `config/auth.php`. Get it on the Laravel repository or just run the following command:
@@ -258,8 +260,8 @@ Then, in `bootstrap/app.php`, register the middlewares:
 ```php
 $app->routeMiddleware([
     'auth'       => App\Http\Middleware\Authenticate::class,
-    'permission' => Spatie\Permission\Middlewares\PermissionMiddleware::class,
-    'role'       => Spatie\Permission\Middlewares\RoleMiddleware::class,
+    'permission' => Daniilborovkov\Permission\Middlewares\PermissionMiddleware::class,
+    'role'       => Daniilborovkov\Permission\Middlewares\RoleMiddleware::class,
 ]);
 ```
 
@@ -267,7 +269,7 @@ As well as the configuration and the service provider:
 
 ```php
 $app->configure('permission');
-$app->register(Spatie\Permission\PermissionServiceProvider::class);
+$app->register(Daniilborovkov\Permission\PermissionServiceProvider::class);
 ```
 
 Now, run your migrations:
@@ -278,11 +280,11 @@ php artisan migrate
 
 ## Usage
 
-First, add the `Spatie\Permission\Traits\HasRoles` trait to your `User` model(s):
+First, add the `Daniilborovkov\Permission\Traits\HasRoles` trait to your `User` model(s):
 
 ```php
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
+use Daniilborovkov\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -296,7 +298,7 @@ class User extends Authenticatable
 >
 >```php
 >use Illuminate\Database\Eloquent\Model;
->use Spatie\Permission\Traits\HasRoles;
+>use Daniilborovkov\Permission\Traits\HasRoles;
 >
 >class Page extends Model
 >{
@@ -312,8 +314,8 @@ This package allows for users to be associated with permissions and roles. Every
 A `Role` and a `Permission` are regular Eloquent models. They require a `name` and can be created like this:
 
 ```php
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Daniilborovkov\Permission\Models\Role;
+use Daniilborovkov\Permission\Models\Permission;
 
 $role = Role::create(['name' => 'writer']);
 $permission = Permission::create(['name' => 'edit articles']);
@@ -364,7 +366,7 @@ The `HasRoles` trait also adds a `role` scope to your models to scope the query 
 $users = User::role('writer')->get(); // Returns only users with the role 'writer'
 ```
 
-The `role` scope can accept a string, a `\Spatie\Permission\Models\Role` object or an `\Illuminate\Support\Collection` object.
+The `role` scope can accept a string, a `\Daniilborovkov\Permission\Models\Role` object or an `\Illuminate\Support\Collection` object.
 
 The same trait also adds a scope to only get users that have a certain permission.
 
@@ -372,7 +374,7 @@ The same trait also adds a scope to only get users that have a certain permissio
 $users = User::permission('edit articles')->get(); // Returns only users with the permission 'edit articles' (inherited or directly)
 ```
 
-The scope can accept a string, a `\Spatie\Permission\Models\Permission` object or an `\Illuminate\Support\Collection` object.
+The scope can accept a string, a `\Daniilborovkov\Permission\Models\Permission` object or an `\Illuminate\Support\Collection` object.
 
 ### Using "direct" permissions (see below to use both roles and permissions)
 
@@ -484,7 +486,7 @@ $user->hasAllRoles(Role::all());
 ```
 
 The `assignRole`, `hasRole`, `hasAnyRole`, `hasAllRoles`  and `removeRole` functions can accept a
- string, a `\Spatie\Permission\Models\Role` object or an `\Illuminate\Support\Collection` object.
+ string, a `\Daniilborovkov\Permission\Models\Role` object or an `\Illuminate\Support\Collection` object.
 
 A permission can be given to a role:
 
@@ -505,7 +507,7 @@ $role->revokePermissionTo('edit articles');
 ```
 
 The `givePermissionTo` and `revokePermissionTo` functions can accept a
-string or a `Spatie\Permission\Models\Permission` object.
+string or a `Daniilborovkov\Permission\Models\Permission` object.
 
 
 Permissions are inherited from roles automatically. 
@@ -541,7 +543,7 @@ $user->getPermissionsViaRoles();
 $user->getAllPermissions();
 ```
 
-All these responses are collections of `Spatie\Permission\Models\Permission` objects.
+All these responses are collections of `Daniilborovkov\Permission\Models\Permission` objects.
 
 If we follow the previous example, the first response will be a collection with the `delete article` permission and 
 the second will be a collection with the `edit article` permission and the third will contain both.
@@ -630,7 +632,7 @@ We strongly recommend that a Super-Admin be handled by setting a global `Gate::b
 
 Then you can implement the best-practice of primarily using permission-based controls throughout your app, without always having to check for "is this a super-admin" everywhere.
 
-See this wiki article on [Defining a Super-Admin Gate rule](https://github.com/spatie/laravel-permission/wiki/Global-%22Admin%22-role) in your app.
+See this wiki article on [Defining a Super-Admin Gate rule](https://github.com/Daniilborovkov/laravel-permission/wiki/Global-%22Admin%22-role) in your app.
 
 ## Best Practices -- roles vs permissions
 
@@ -695,9 +697,9 @@ This package comes with `RoleMiddleware`, `PermissionMiddleware` and `RoleOrPerm
 ```php
 protected $routeMiddleware = [
     // ...
-    'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-    'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-    'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+    'role' => \Daniilborovkov\Permission\Middlewares\RoleMiddleware::class,
+    'permission' => \Daniilborovkov\Permission\Middlewares\PermissionMiddleware::class,
+    'role_or_permission' => \Daniilborovkov\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 ];
 ```
 
@@ -763,7 +765,7 @@ If you want to override the default `403` response, you can catch the `Unauthori
 ```php
 public function render($request, Exception $exception)
 {
-    if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+    if ($exception instanceof \Daniilborovkov\Permission\Exceptions\UnauthorizedException) {
         // Code here ...
     }
 
@@ -811,7 +813,7 @@ In your application's tests, if you are not seeding roles and permissions as par
         parent::setUp();
 
         // now re-register all the roles and permissions
-        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
+        $this->app->make(\Daniilborovkov\Permission\PermissionRegistrar::class)->registerPermissions();
     }
 ```
 
@@ -821,15 +823,15 @@ You may discover that it is best to flush this package's cache before seeding, t
 
 ```php
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Daniilborovkov\Permission\Models\Role;
+use Daniilborovkov\Permission\Models\Permission;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
     public function run()
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[\Daniilborovkov\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
         Permission::create(['name' => 'edit articles']);
@@ -857,19 +859,19 @@ class RolesAndPermissionsSeeder extends Seeder
 
 If you need to EXTEND the existing `Role` or `Permission` models note that:
 
-- Your `Role` model needs to extend the `Spatie\Permission\Models\Role` model
-- Your `Permission` model needs to extend the `Spatie\Permission\Models\Permission` model
+- Your `Role` model needs to extend the `Daniilborovkov\Permission\Models\Role` model
+- Your `Permission` model needs to extend the `Daniilborovkov\Permission\Models\Permission` model
 
 If you need to REPLACE the existing `Role` or `Permission` models you need to keep the
 following things in mind:
 
-- Your `Role` model needs to implement the `Spatie\Permission\Contracts\Role` contract
-- Your `Permission` model needs to implement the `Spatie\Permission\Contracts\Permission` contract
+- Your `Role` model needs to implement the `Daniilborovkov\Permission\Contracts\Role` contract
+- Your `Permission` model needs to implement the `Daniilborovkov\Permission\Contracts\Permission` contract
 
 In BOTH cases, whether extending or replacing, you will need to specify your new models in the configuration. To do this you must update the `models.role` and `models.permission` values in the configuration file after publishing the configuration with this command:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Daniilborovkov\Permission\PermissionServiceProvider" --tag="config"
 ```
  
 
@@ -898,7 +900,7 @@ HOWEVER, if you manipulate permission/role data directly in the database instead
 ### Manual cache reset
 To manually reset the cache for this package, you can run the following in your app code:
 ```php
-$this->app->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+$this->app->make(\Daniilborovkov\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 ```
 
 Or you can use an Artisan command:
@@ -923,7 +925,7 @@ The package doesn't come with any screens out of the box, you should build that 
 
 - [Laravel Nova package by @paras-malhotra for managing Roles and Permissions and permissions based authorization for Nova Resources](https://github.com/insenseanalytics/laravel-nova-permission)
 
-- [Extensive tutorial for building permissions UI](https://scotch.io/tutorials/user-authorization-in-laravel-54-with-spatie-laravel-permission) by [Caleb Oki](http://www.caleboki.com/).
+- [Extensive tutorial for building permissions UI](https://scotch.io/tutorials/user-authorization-in-laravel-54-with-Daniilborovkov-laravel-permission) by [Caleb Oki](http://www.caleboki.com/).
 
 - [How to create a UI for managing the permissions and roles](http://www.qcode.in/easy-roles-and-permissions-in-laravel-5-4/)
 
@@ -948,15 +950,15 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security-related issues, please email [freek@spatie.be](mailto:freek@spatie.be) instead of using the issue tracker.
+If you discover any security-related issues, please email [freek@Daniilborovkov.be](mailto:freek@Daniilborovkov.be) instead of using the issue tracker.
 
 ## Postcardware
 
 You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
+Our address is: Daniilborovkov, Samberstraat 69D, 2060 Antwerp, Belgium.
 
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
+We publish all received postcards [on our company website](https://Daniilborovkov.be/en/opensource/postcards).
 
 ## Credits
 
@@ -976,9 +978,9 @@ Special thanks to [Alex Vanderbist](https://github.com/AlexVanderbist) who great
 
 ## Support us
 
-Spatie is a web design agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+Daniilborovkov is a web design agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://Daniilborovkov.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/Daniilborovkov). 
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License

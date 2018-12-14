@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\Permission;
+namespace Daniilborovkov\Permission;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Contracts\Role;
+use Daniilborovkov\Permission\Contracts\Role;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Spatie\Permission\Contracts\Permission;
+use Daniilborovkov\Permission\Contracts\Permission;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use Daniilborovkov\Permission\Exceptions\PermissionDoesNotExist;
 
 class PermissionRegistrar
 {
@@ -68,7 +68,7 @@ class PermissionRegistrar
         $this->cache = self::$cacheIsTaggable ? $cache->tags(self::$cacheKey) : $cache;
     }
 
-    protected function getCacheStoreFromConfig(): \Illuminate\Contracts\Cache\Repository
+    protected function getCacheStoreFromConfig()
     {
         // the 'default' fallback here is from the permission.php config file, where 'default' means to use config(cache.default)
         $cacheDriver = config('permission.cache.store', 'default');
@@ -160,7 +160,7 @@ class PermissionRegistrar
     /**
      * Get an instance of the permission class.
      *
-     * @return \Spatie\Permission\Contracts\Permission
+     * @return \Daniilborovkov\Permission\Contracts\Permission
      */
     public function getPermissionClass(): Permission
     {
@@ -170,7 +170,7 @@ class PermissionRegistrar
     /**
      * Get an instance of the role class.
      *
-     * @return \Spatie\Permission\Contracts\Role
+     * @return \Daniilborovkov\Permission\Contracts\Role
      */
     public function getRoleClass(): Role
     {

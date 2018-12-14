@@ -1,15 +1,15 @@
 <?php
 
-namespace Spatie\Permission\Traits;
+namespace Daniilborovkov\Permission\Traits;
 
-use Spatie\Permission\Guard;
+use Daniilborovkov\Permission\Guard;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Permission\PermissionRegistrar;
-use Spatie\Permission\Contracts\Permission;
-use Spatie\Permission\Exceptions\GuardDoesNotMatch;
+use Daniilborovkov\Permission\PermissionRegistrar;
+use Daniilborovkov\Permission\Contracts\Permission;
+use Daniilborovkov\Permission\Exceptions\GuardDoesNotMatch;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use Daniilborovkov\Permission\Exceptions\PermissionDoesNotExist;
 
 trait HasPermissions
 {
@@ -53,7 +53,7 @@ trait HasPermissions
      * Scope the model query to certain permissions only.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -86,7 +86,7 @@ trait HasPermissions
     }
 
     /**
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return array
      */
@@ -110,7 +110,7 @@ trait HasPermissions
     /**
      * Determine if the model may perform the given permission.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      * @param string|null $guardName
      *
      * @return bool
@@ -174,7 +174,7 @@ trait HasPermissions
     /**
      * An alias to hasPermissionTo(), but avoids throwing an exception.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      * @param string|null $guardName
      *
      * @return bool
@@ -193,7 +193,7 @@ trait HasPermissions
     /**
      * Construct the key for the cache entry.
      *
-     * @param null|string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param null|string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      *
      * @return string
      */
@@ -211,7 +211,7 @@ trait HasPermissions
     /**
      * Construct the tags for the cache entry.
      *
-     * @param null|string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param null|string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      *
      * @return array
      */
@@ -242,7 +242,7 @@ trait HasPermissions
     /**
      * Get the key to cache the permission by.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      *
      * @return mixed
      */
@@ -304,7 +304,7 @@ trait HasPermissions
     /**
      * Determine if the model has, via roles, the given permission.
      *
-     * @param \Spatie\Permission\Contracts\Permission $permission
+     * @param \Daniilborovkov\Permission\Contracts\Permission $permission
      *
      * @return bool
      */
@@ -316,7 +316,7 @@ trait HasPermissions
     /**
      * Determine if the model has the given permission.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\Daniilborovkov\Permission\Contracts\Permission $permission
      *
      * @return bool
      */
@@ -390,7 +390,7 @@ trait HasPermissions
     /**
      * Grant the given permission(s) to a role.
      *
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return $this
      */
@@ -433,7 +433,7 @@ trait HasPermissions
     /**
      * Remove all current permissions and set the given ones.
      *
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return $this
      */
@@ -447,7 +447,7 @@ trait HasPermissions
     /**
      * Revoke the given permission.
      *
-     * @param \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Permission[]|string|string[] $permission
+     * @param \Daniilborovkov\Permission\Contracts\Permission|\Daniilborovkov\Permission\Contracts\Permission[]|string|string[] $permission
      *
      * @return $this
      */
@@ -463,9 +463,9 @@ trait HasPermissions
     }
 
     /**
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
-     * @return \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Permission[]|\Illuminate\Support\Collection
+     * @return \Daniilborovkov\Permission\Contracts\Permission|\Daniilborovkov\Permission\Contracts\Permission[]|\Illuminate\Support\Collection
      */
     protected function getStoredPermission($permissions)
     {
@@ -490,9 +490,9 @@ trait HasPermissions
     }
 
     /**
-     * @param \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Role $roleOrPermission
+     * @param \Daniilborovkov\Permission\Contracts\Permission|\Daniilborovkov\Permission\Contracts\Role $roleOrPermission
      *
-     * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
+     * @throws \Daniilborovkov\Permission\Exceptions\GuardDoesNotMatch
      */
     protected function ensureModelSharesGuard($roleOrPermission)
     {
