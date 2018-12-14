@@ -10,45 +10,32 @@ use Daniilborovkov\Permission\Contracts\Permission;
 use Daniilborovkov\Permission\Exceptions\GuardDoesNotMatch;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Daniilborovkov\Permission\Exceptions\PermissionDoesNotExist;
-
 trait HasPermissions
 {
     private $permissionClass;
-
     public static function bootHasPermissions()
     {
         static::deleting(function ($model) {
-            if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
+            if (method_exists($model, 'isForceDeleting') && !$model->isForceDeleting()) {
                 return;
             }
-
             $model->permissions()->detach();
         });
     }
-
     public function getPermissionClass()
     {
-        if (! isset($this->permissionClass)) {
+        if (!isset($this->permissionClass)) {
             $this->permissionClass = app(PermissionRegistrar::class)->getPermissionClass();
         }
-
         return $this->permissionClass;
     }
-
     /**
      * A model may have multiple direct permissions.
      */
     public function permissions()
     {
-        return $this->morphToMany(
-            config('permission.models.permission'),
-            'model',
-            config('permission.table_names.model_has_permissions'),
-            config('permission.column_names.model_morph_key'),
-            'permission_id'
-        );
+        return $this->morphToMany(config('permission.models.permission'), 'model', config('permission.table_names.model_has_permissions'), config('permission.column_names.model_morph_key'), 'permission_id');
     }
-
     /**
      * Scope the model query to certain permissions only.
      *
@@ -60,31 +47,28 @@ trait HasPermissions
     public function scopePermission(Builder $query, $permissions)
     {
         $permissions = $this->convertToPermissionModels($permissions);
-
         $rolesWithPermissions = array_unique(array_reduce($permissions, function ($result, $permission) {
             return array_merge($result, $permission->roles->all());
         }, []));
-
-        return $query->where(function ($query) use ($permissions, $rolesWithPermissions) {
-            $query->whereHas('permissions', function ($query) use ($permissions) {
-                $query->where(function ($query) use ($permissions) {
+        return $query->where(function ($query) use($permissions, $rolesWithPermissions) {
+            $query->whereHas('permissions', function ($query) use($permissions) {
+                $query->where(function ($query) use($permissions) {
                     foreach ($permissions as $permission) {
-                        $query->orWhere(config('permission.table_names.permissions').'.id', $permission->id);
+                        $query->orWhere(config('permission.table_names.permissions') . '.id', $permission->id);
                     }
                 });
             });
             if (count($rolesWithPermissions) > 0) {
-                $query->orWhereHas('roles', function ($query) use ($rolesWithPermissions) {
-                    $query->where(function ($query) use ($rolesWithPermissions) {
+                $query->orWhereHas('roles', function ($query) use($rolesWithPermissions) {
+                    $query->where(function ($query) use($rolesWithPermissions) {
                         foreach ($rolesWithPermissions as $role) {
-                            $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
+                            $query->orWhere(config('permission.table_names.roles') . '.id', $role->id);
                         }
                     });
                 });
             }
         });
     }
-
     /**
      * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
@@ -95,18 +79,14 @@ trait HasPermissions
         if ($permissions instanceof Collection) {
             $permissions = $permissions->all();
         }
-
         $permissions = array_wrap($permissions);
-
         return array_map(function ($permission) {
             if ($permission instanceof Permission) {
                 return $permission;
             }
-
             return $this->getPermissionClass()->findByName($permission, $this->getDefaultGuardName());
         }, $permissions);
     }
-
     /**
      * Determine if the model may perform the given permission.
      *
@@ -118,26 +98,17 @@ trait HasPermissions
      */
     public function hasPermissionTo($permission, $guardName = null)
     {
-        if (! is_string($permission) && ! is_int($permission) && ! $permission instanceof Permission) {
-            throw new PermissionDoesNotExist;
+        if (!is_string($permission) && !is_int($permission) && !$permission instanceof Permission) {
+            throw new PermissionDoesNotExist();
         }
-
         $registrar = app(PermissionRegistrar::class);
-        if (! $registrar::$cacheIsTaggable) {
+        if (!$registrar::$cacheIsTaggable) {
             return $this->hasUncachedPermissionTo($permission, $guardName);
         }
-
-        return $registrar->getCacheStore()
-            ->tags($this->getCacheTags($permission))
-            ->remember(
-                $this->getPermissionCacheKey($permission),
-                $registrar::$cacheExpirationTime,
-                function () use ($permission, $guardName) {
-                    return $this->hasUncachedPermissionTo($permission, $guardName);
-                }
-            );
+        return $registrar->getCacheStore()->tags($this->getCacheTags($permission))->remember($this->getPermissionCacheKey($permission), $registrar::$cacheExpirationTime, function () use($permission, $guardName) {
+            return $this->hasUncachedPermissionTo($permission, $guardName);
+        });
     }
-
     /**
      * Check the uncached permissions for the model.
      *
@@ -149,28 +120,17 @@ trait HasPermissions
     public function hasUncachedPermissionTo($permission, $guardName = null)
     {
         $permissionClass = $this->getPermissionClass();
-
         if (is_string($permission)) {
-            $permission = $permissionClass->findByName(
-                $permission,
-                $guardName ?? $this->getDefaultGuardName()
-            );
+            $permission = $permissionClass->findByName($permission, isset($guardName) ? $guardName : $this->getDefaultGuardName());
         }
-
         if (is_int($permission)) {
-            $permission = $permissionClass->findById(
-                $permission,
-                $guardName ?? $this->getDefaultGuardName()
-            );
+            $permission = $permissionClass->findById($permission, isset($guardName) ? $guardName : $this->getDefaultGuardName());
         }
-
-        if (! $permission instanceof Permission) {
-            throw new PermissionDoesNotExist;
+        if (!$permission instanceof Permission) {
+            throw new PermissionDoesNotExist();
         }
-
         return $this->hasDirectPermission($permission) || $this->hasPermissionViaRole($permission);
     }
-
     /**
      * An alias to hasPermissionTo(), but avoids throwing an exception.
      *
@@ -189,7 +149,6 @@ trait HasPermissions
             return false;
         }
     }
-
     /**
      * Construct the key for the cache entry.
      *
@@ -199,15 +158,12 @@ trait HasPermissions
      */
     protected function getPermissionCacheKey($permission = null)
     {
-        $key = PermissionRegistrar::$cacheKey.'.'.$this->getClassCacheString();
-
+        $key = PermissionRegistrar::$cacheKey . '.' . $this->getClassCacheString();
         if ($permission !== null) {
             $key .= $this->getPermissionCacheString($permission);
         }
-
         return $key;
     }
-
     /**
      * Construct the tags for the cache entry.
      *
@@ -217,18 +173,12 @@ trait HasPermissions
      */
     protected function getCacheTags($permission = null)
     {
-        $tags = [
-            PermissionRegistrar::$cacheKey,
-            $this->getClassCacheString(),
-        ];
-
+        $tags = [PermissionRegistrar::$cacheKey, $this->getClassCacheString()];
         if ($permission !== null) {
             $tags[] = $this->getPermissionCacheString($permission);
         }
-
         return $tags;
     }
-
     /**
      * Get the key to cache the model by.
      *
@@ -236,9 +186,8 @@ trait HasPermissions
      */
     private function getClassCacheString()
     {
-        return str_replace('\\', '.', get_class($this)).'.'.$this->getKey();
+        return str_replace('\\', '.', get_class($this)) . '.' . $this->getKey();
     }
-
     /**
      * Get the key to cache the permission by.
      *
@@ -251,10 +200,8 @@ trait HasPermissions
         if ($permission instanceof Permission) {
             $permission = $permission[PermissionRegistrar::$cacheModelKey];
         }
-
-        return str_replace('\\', '.', Permission::class).'.'.$permission;
+        return str_replace('\\', '.', Permission::class) . '.' . $permission;
     }
-
     /**
      * Determine if the model has any of the given permissions.
      *
@@ -268,16 +215,13 @@ trait HasPermissions
         if (is_array($permissions[0])) {
             $permissions = $permissions[0];
         }
-
         foreach ($permissions as $permission) {
             if ($this->checkPermissionTo($permission)) {
                 return true;
             }
         }
-
         return false;
     }
-
     /**
      * Determine if the model has all of the given permissions.
      *
@@ -291,16 +235,13 @@ trait HasPermissions
         if (is_array($permissions[0])) {
             $permissions = $permissions[0];
         }
-
         foreach ($permissions as $permission) {
-            if (! $this->hasPermissionTo($permission)) {
+            if (!$this->hasPermissionTo($permission)) {
                 return false;
             }
         }
-
         return true;
     }
-
     /**
      * Determine if the model has, via roles, the given permission.
      *
@@ -312,7 +253,6 @@ trait HasPermissions
     {
         return $this->hasRole($permission->roles);
     }
-
     /**
      * Determine if the model has the given permission.
      *
@@ -323,39 +263,32 @@ trait HasPermissions
     public function hasDirectPermission($permission)
     {
         $permissionClass = $this->getPermissionClass();
-
         if (is_string($permission)) {
             $permission = $permissionClass->findByName($permission, $this->getDefaultGuardName());
-            if (! $permission) {
+            if (!$permission) {
                 return false;
             }
         }
-
         if (is_int($permission)) {
             $permission = $permissionClass->findById($permission, $this->getDefaultGuardName());
-            if (! $permission) {
+            if (!$permission) {
                 return false;
             }
         }
-
-        if (! $permission instanceof Permission) {
+        if (!$permission instanceof Permission) {
             return false;
         }
-
         return $this->permissions->contains('id', $permission->id);
     }
-
     /**
      * Return all the permissions the model has via roles.
      */
     public function getPermissionsViaRoles()
     {
-        return $this->load('roles', 'roles.permissions')
-            ->roles->flatMap(function ($role) {
-                return $role->permissions;
-            })->sort()->values();
+        return $this->load('roles', 'roles.permissions')->roles->flatMap(function ($role) {
+            return $role->permissions;
+        })->sort()->values();
     }
-
     /**
      * Return all the permissions the model has, both directly and via roles.
      *
@@ -365,28 +298,17 @@ trait HasPermissions
     {
         $functionGetAllPermissions = function () {
             $permissions = $this->permissions;
-
             if ($this->roles) {
                 $permissions = $permissions->merge($this->getPermissionsViaRoles());
             }
-
             return $permissions->sort()->values();
         };
-
         $registrar = app(PermissionRegistrar::class);
         if ($registrar::$cacheIsTaggable) {
-            return $registrar->getCacheStore()
-                ->tags($this->getCacheTags())
-                ->remember(
-                    $this->getPermissionCacheKey(),
-                    $registrar::$cacheExpirationTime,
-                    $functionGetAllPermissions
-                );
+            return $registrar->getCacheStore()->tags($this->getCacheTags())->remember($this->getPermissionCacheKey(), $registrar::$cacheExpirationTime, $functionGetAllPermissions);
         }
-
         return $functionGetAllPermissions();
     }
-
     /**
      * Grant the given permission(s) to a role.
      *
@@ -396,40 +318,27 @@ trait HasPermissions
      */
     public function givePermissionTo(...$permissions)
     {
-        $permissions = collect($permissions)
-            ->flatten()
-            ->map(function ($permission) {
-                return $this->getStoredPermission($permission);
-            })
-            ->filter(function ($permission) {
-                return $permission instanceof Permission;
-            })
-            ->each(function ($permission) {
-                $this->ensureModelSharesGuard($permission);
-            })
-            ->map->id
-            ->all();
-
+        $permissions = collect($permissions)->flatten()->map(function ($permission) {
+            return $this->getStoredPermission($permission);
+        })->filter(function ($permission) {
+            return $permission instanceof Permission;
+        })->each(function ($permission) {
+            $this->ensureModelSharesGuard($permission);
+        })->map->id->all();
         $model = $this->getModel();
-
         if ($model->exists) {
             $this->permissions()->sync($permissions, false);
             $model->load('permissions');
         } else {
             $class = \get_class($model);
-
-            $class::saved(
-                function ($model) use ($permissions) {
-                    $model->permissions()->sync($permissions, false);
-                    $model->load('permissions');
-                });
+            $class::saved(function ($model) use($permissions) {
+                $model->permissions()->sync($permissions, false);
+                $model->load('permissions');
+            });
         }
-
         $this->forgetCachedPermissions();
-
         return $this;
     }
-
     /**
      * Remove all current permissions and set the given ones.
      *
@@ -440,10 +349,8 @@ trait HasPermissions
     public function syncPermissions(...$permissions)
     {
         $this->permissions()->detach();
-
         return $this->givePermissionTo($permissions);
     }
-
     /**
      * Revoke the given permission.
      *
@@ -454,14 +361,10 @@ trait HasPermissions
     public function revokePermissionTo($permission)
     {
         $this->permissions()->detach($this->getStoredPermission($permission));
-
         $this->forgetCachedPermissions();
-
         $this->load('permissions');
-
         return $this;
     }
-
     /**
      * @param string|array|\Daniilborovkov\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
@@ -470,25 +373,17 @@ trait HasPermissions
     protected function getStoredPermission($permissions)
     {
         $permissionClass = $this->getPermissionClass();
-
         if (is_numeric($permissions)) {
             return $permissionClass->findById($permissions, $this->getDefaultGuardName());
         }
-
         if (is_string($permissions)) {
             return $permissionClass->findByName($permissions, $this->getDefaultGuardName());
         }
-
         if (is_array($permissions)) {
-            return $permissionClass
-                ->whereIn('name', $permissions)
-                ->whereIn('guard_name', $this->getGuardNames())
-                ->get();
+            return $permissionClass->whereIn('name', $permissions)->whereIn('guard_name', $this->getGuardNames())->get();
         }
-
         return $permissions;
     }
-
     /**
      * @param \Daniilborovkov\Permission\Contracts\Permission|\Daniilborovkov\Permission\Contracts\Role $roleOrPermission
      *
@@ -496,21 +391,18 @@ trait HasPermissions
      */
     protected function ensureModelSharesGuard($roleOrPermission)
     {
-        if (! $this->getGuardNames()->contains($roleOrPermission->guard_name)) {
+        if (!$this->getGuardNames()->contains($roleOrPermission->guard_name)) {
             throw GuardDoesNotMatch::create($roleOrPermission->guard_name, $this->getGuardNames());
         }
     }
-
     protected function getGuardNames()
     {
         return Guard::getNames($this);
     }
-
     protected function getDefaultGuardName()
     {
         return Guard::getDefaultName($this);
     }
-
     /**
      * Forget the cached permissions.
      */

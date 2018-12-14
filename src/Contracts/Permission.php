@@ -3,7 +3,6 @@
 namespace Daniilborovkov\Permission\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 interface Permission
 {
     /**
@@ -12,7 +11,6 @@ interface Permission
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles();
-
     /**
      * Find a permission by its name.
      *
@@ -23,8 +21,7 @@ interface Permission
      *
      * @return Permission
      */
-    public static function findByName(string $name, $guardName);
-
+    public static function findByName($name, $guardName);
     /**
      * Find a permission by its id.
      *
@@ -35,8 +32,7 @@ interface Permission
      *
      * @return Permission
      */
-    public static function findById(int $id, $guardName);
-
+    public static function findById($id, $guardName);
     /**
      * Find or Create a permission by its name and guard name.
      *
@@ -45,5 +41,5 @@ interface Permission
      *
      * @return Permission
      */
-    public static function findOrCreate(string $name, $guardName);
+    public static function findOrCreate($name, $guardName);
 }

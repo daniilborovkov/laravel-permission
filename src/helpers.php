@@ -5,19 +5,16 @@
  *
  * @return string|null
  */
-function getModelForGuard(string $guard)
+function getModelForGuard($guard)
 {
-    return collect(config('auth.guards'))
-        ->map(function ($guard) {
-            if (! isset($guard['provider'])) {
-                return;
-            }
-
-            return config("auth.providers.{$guard['provider']}.model");
-        })->get($guard);
+    return collect(config('auth.guards'))->map(function ($guard) {
+        if (!isset($guard['provider'])) {
+            return;
+        }
+        return config("auth.providers.{$guard['provider']}.model");
+    })->get($guard);
 }
-
 function isNotLumen()
 {
-    return ! preg_match('/lumen/i', app()->version());
+    return !preg_match('/lumen/i', app()->version());
 }

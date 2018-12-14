@@ -3,7 +3,6 @@
 namespace Daniilborovkov\Permission\Traits;
 
 use Daniilborovkov\Permission\PermissionRegistrar;
-
 trait RefreshesPermissionCache
 {
     public static function bootRefreshesPermissionCache()
@@ -11,7 +10,6 @@ trait RefreshesPermissionCache
         static::saved(function () {
             app(PermissionRegistrar::class)->forgetCachedPermissions();
         });
-
         static::deleted(function () {
             app(PermissionRegistrar::class)->forgetCachedPermissions();
         });
