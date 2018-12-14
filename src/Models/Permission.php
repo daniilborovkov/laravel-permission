@@ -50,7 +50,7 @@ class Permission extends Model implements PermissionContract
     /**
      * A permission can be applied to roles.
      */
-    public function roles(): BelongsToMany
+    public function roles()
     {
         return $this->belongsToMany(
             config('permission.models.role'),

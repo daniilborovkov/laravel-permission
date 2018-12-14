@@ -47,7 +47,7 @@ class Role extends Model implements RoleContract
     /**
      * A role may be given various permissions.
      */
-    public function permissions(): BelongsToMany
+    public function permissions()
     {
         return $this->belongsToMany(
             config('permission.models.permission'),
@@ -58,7 +58,7 @@ class Role extends Model implements RoleContract
     /**
      * A role belongs to some users of the model associated with its guard.
      */
-    public function users(): MorphToMany
+    public function users()
     {
         return $this->morphedByMany(
             getModelForGuard($this->attributes['guard_name']),
@@ -79,7 +79,7 @@ class Role extends Model implements RoleContract
      *
      * @throws \Daniilborovkov\Permission\Exceptions\RoleDoesNotExist
      */
-    public static function findByName(string $name, $guardName = null): RoleContract
+    public static function findByName(string $name, $guardName = null)
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
 
@@ -92,7 +92,7 @@ class Role extends Model implements RoleContract
         return $role;
     }
 
-    public static function findById(int $id, $guardName = null): RoleContract
+    public static function findById(int $id, $guardName = null)
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
 
@@ -113,7 +113,7 @@ class Role extends Model implements RoleContract
      *
      * @return \Daniilborovkov\Permission\Contracts\Role
      */
-    public static function findOrCreate(string $name, $guardName = null): RoleContract
+    public static function findOrCreate(string $name, $guardName = null)
     {
         $guardName = $guardName ?? Guard::getDefaultName(static::class);
 
@@ -135,7 +135,7 @@ class Role extends Model implements RoleContract
      *
      * @throws \Daniilborovkov\Permission\Exceptions\GuardDoesNotMatch
      */
-    public function hasPermissionTo($permission): bool
+    public function hasPermissionTo($permission)
     {
         $permissionClass = $this->getPermissionClass();
 
