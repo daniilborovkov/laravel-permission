@@ -14,7 +14,7 @@ Fork to make compatible with php5.6 for legacy project app.chechil.com
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/Daniilborovkov/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/Daniilborovkov/laravel-permission)
-[![Build Status](https://img.shields.io/travis/Daniilborovkov/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/Daniilborovkov/laravel-permission)
+[![Build Status](https://img.shields.io/travis/daniilborovkov/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/daniilborovkov/laravel-permission)
 [![StyleCI](https://styleci.io/repos/42480275/shield)](https://styleci.io/repos/42480275)
 [![Total Downloads](https://img.shields.io/packagist/dt/Daniilborovkov/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/Daniilborovkov/laravel-permission)
 
