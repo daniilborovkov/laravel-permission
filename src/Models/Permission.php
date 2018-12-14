@@ -31,7 +31,7 @@ class Permission extends Model implements PermissionContract
         if ($permission) {
             throw PermissionAlreadyExists::create($attributes['name'], $attributes['guard_name']);
         }
-        if (isNotLumen() && app()::VERSION < '5.4') {
+        if (isNotLumen() && app()->version() < '5.4') {
             return parent::create($attributes);
         }
         return static::query()->create($attributes);
