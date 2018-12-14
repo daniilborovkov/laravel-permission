@@ -56,7 +56,7 @@ trait HasRoles
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeRole(Builder $query, $roles): Builder
+    public function scopeRole(Builder $query, $roles)
     {
         if ($roles instanceof Collection) {
             $roles = $roles->all();
@@ -164,7 +164,7 @@ trait HasRoles
      *
      * @return bool
      */
-    public function hasRole($roles): bool
+    public function hasRole($roles)
     {
         if (is_string($roles) && false !== strpos($roles, '|')) {
             $roles = $this->convertPipeToArray($roles);
@@ -202,7 +202,7 @@ trait HasRoles
      *
      * @return bool
      */
-    public function hasAnyRole($roles): bool
+    public function hasAnyRole($roles)
     {
         return $this->hasRole($roles);
     }
@@ -214,7 +214,7 @@ trait HasRoles
      *
      * @return bool
      */
-    public function hasAllRoles($roles): bool
+    public function hasAllRoles($roles)
     {
         if (is_string($roles) && false !== strpos($roles, '|')) {
             $roles = $this->convertPipeToArray($roles);
@@ -238,17 +238,17 @@ trait HasRoles
     /**
      * Return all permissions directly coupled to the model.
      */
-    public function getDirectPermissions(): Collection
+    public function getDirectPermissions()
     {
         return $this->permissions;
     }
 
-    public function getRoleNames(): Collection
+    public function getRoleNames()
     {
         return $this->roles->pluck('name');
     }
 
-    protected function getStoredRole($role): Role
+    protected function getStoredRole($role)
     {
         $roleClass = $this->getRoleClass();
 

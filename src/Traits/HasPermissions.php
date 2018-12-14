@@ -181,7 +181,7 @@ trait HasPermissions
      *
      * @throws \Exception
      */
-    public function checkPermissionTo($permission, $guardName = null): bool
+    public function checkPermissionTo($permission, $guardName = null)
     {
         try {
             return $this->hasPermissionTo($permission, $guardName);
@@ -263,7 +263,7 @@ trait HasPermissions
      * @return bool
      * @throws \Exception
      */
-    public function hasAnyPermission(...$permissions): bool
+    public function hasAnyPermission(...$permissions)
     {
         if (is_array($permissions[0])) {
             $permissions = $permissions[0];
@@ -286,7 +286,7 @@ trait HasPermissions
      * @return bool
      * @throws \Exception
      */
-    public function hasAllPermissions(...$permissions): bool
+    public function hasAllPermissions(...$permissions)
     {
         if (is_array($permissions[0])) {
             $permissions = $permissions[0];
@@ -308,7 +308,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    protected function hasPermissionViaRole(Permission $permission): bool
+    protected function hasPermissionViaRole(Permission $permission)
     {
         return $this->hasRole($permission->roles);
     }
@@ -320,7 +320,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    public function hasDirectPermission($permission): bool
+    public function hasDirectPermission($permission)
     {
         $permissionClass = $this->getPermissionClass();
 
@@ -348,7 +348,7 @@ trait HasPermissions
     /**
      * Return all the permissions the model has via roles.
      */
-    public function getPermissionsViaRoles(): Collection
+    public function getPermissionsViaRoles()
     {
         return $this->load('roles', 'roles.permissions')
             ->roles->flatMap(function ($role) {
@@ -361,7 +361,7 @@ trait HasPermissions
      *
      * @throws \Exception
      */
-    public function getAllPermissions(): Collection
+    public function getAllPermissions()
     {
         $functionGetAllPermissions = function () {
             $permissions = $this->permissions;
@@ -501,12 +501,12 @@ trait HasPermissions
         }
     }
 
-    protected function getGuardNames(): Collection
+    protected function getGuardNames()
     {
         return Guard::getNames($this);
     }
 
-    protected function getDefaultGuardName(): string
+    protected function getDefaultGuardName()
     {
         return Guard::getDefaultName($this);
     }
